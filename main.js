@@ -8,6 +8,13 @@ const photoCanvas = document.getElementById('photo-canvas');
 
 let stream;
 
+// --- Clarifai Configuration ---
+const USER_ID = 'YOUR_USER_ID';
+const PAT = 'YOUR_PAT'; // Your Personal Access Token
+const APP_ID = 'YOUR_APP_ID';
+const MODEL_ID = 'general-image-recognition';
+// ------------------------------
+
 class InfoCard extends HTMLElement {
     constructor() {
         super();
@@ -150,6 +157,7 @@ async function startCamera() {
     proceedButton.style.display = 'none';
     retakeButton.style.display = 'none';
     document.getElementById("device-information-section").style.display = "none";
+    document.getElementById('recognized-object').textContent = '';
   } catch (err) {
     console.error("Error accessing the camera: ", err);
   }
@@ -193,7 +201,47 @@ function retakePhoto() {
     startCamera();
 }
 
-function proceed() {
+async function proceed() {
+    const raw = JSON.stringify({
+        "user_app_id": {
+            "user_id": USER_ID,
+            "app_id": APP_ID
+        },
+        "inputs": [
+            {
+                "data": {
+                    "image": {
+                        "base64": photoCanvas.toDataURL('image/jpeg').split(',')[1]
+                    }
+                }
+            }
+        ]
+    });
+
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Authorization': 'Key ' + PAT
+        },
+        body: raw
+    };
+
+    try {
+        const response = await fetch(`https://api.clarifai.com/v2/models/${MODEL_ID}/outputs`, requestOptions);
+        const data = await response.json();
+
+        if (data.outputs && data.outputs[0].data.concepts.length > 0) {
+            const conceptName = data.outputs[0].data.concepts[0].name;
+            document.getElementById('recognized-object').textContent = `(${conceptName})`;
+        } else {
+            document.getElementById('recognized-object').textContent = '(Object not recognized)';
+        }
+    } catch (error) {
+        console.error('Clarifai API Error:', error);
+        document.getElementById('recognized-object').textContent = '(API request failed)';
+    }
+
     // Data for the cards
     const readinessData = [
         "Ensure the mouse is clean and free of debris.",
@@ -233,7 +281,7 @@ function proceed() {
     // Populate the cards
     document.querySelector('info-card[card-id="readiness-checklist"]').setData(readinessData);
     document.querySelector('info-card[card-id="quick-start-guides"]').setData(quickStartData);
-    document.querySelector('info-card[card-id="videos"]').setData(videoData);
+    document.querySelector('info-card[card-id="videos"]').setData(videoData, 'html');
     document.querySelector('info-card[card-id="safety-instructions"]').setData(safetyData);
     document.querySelector('info-card[card-id="service-provider"]').setData(serviceProviderData);
     document.querySelector('info-card[card-id="common-issues"]').setData(commonIssuesData);

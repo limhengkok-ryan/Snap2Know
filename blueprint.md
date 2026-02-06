@@ -2,13 +2,14 @@
 
 ## Overview
 
-Snap2Know is a web-based utility that allows users to take a picture of a device and instantly get relevant information and support resources. It uses the browser's camera and provides a simple, card-based interface to display information.
+Snap2Know is a web-based utility that allows users to take a picture of a device and instantly get relevant information and support resources. It uses the browser's camera, Clarifai for image recognition, and provides a simple, card-based interface to display information.
 
 ## Project Outline (Features & Design)
 
 ### Core Functionality
 *   **Camera Interaction**: Uses `navigator.mediaDevices.getUserMedia` to access the device's camera.
 *   **Photo Capture**: Captures a still frame from the video stream onto a `<canvas>`.
+*   **Image Recognition**: On "Proceed", sends the captured photo to the Clarifai API to identify the object.
 *   **Workflow Buttons**: "Start", "Capture", "Cancel", "Proceed", "Retake" buttons guide the user through the process.
 
 ### Visual Design & UI
@@ -23,7 +24,7 @@ Snap2Know is a web-based utility that allows users to take a picture of a device
     *   **Structure**: Uses Shadow DOM for encapsulation.
     *   **Content**: Displays a `title` and a list of items or custom HTML.
     *   **Interactivity**: Cards are collapsible; clicking the header expands or collapses the content.
-*   **Device Name**: Displays the name of the identified device (e.g., "Delux M700 Mouse").
+*   **Device Name**: Displays a placeholder name ("Delux M700 Mouse") and the recognized object name from Clarifai in parentheses.
 *   **Information Categories (Cards)**:
     1.  **Readiness Checklist**: Pre-use checks for the device.
     2.  **Quick Start Guides**: Links to articles for getting started.
@@ -33,17 +34,17 @@ Snap2Know is a web-based utility that allows users to take a picture of a device
     6.  **Common Issues**: A list of frequently encountered problems.
     7.  **Submit Feedback**: A form for users to submit feedback.
 
-## Current Plan: Add Feedback Card
+## Current Plan: Re-integrate Clarifai Image Recognition
 
-**Overview:** Add a new card to the interface that allows users to submit feedback about their experience.
+**Overview:** Call the Clarifai API when the user clicks "Proceed" to identify the object in the photo. Display the result below the main device title.
 
 **Actionable Steps:**
-1.  **Update `index.html`**: Add a new `<info-card>` element to the main grid for the feedback form.
-2.  **Refactor `main.js`**:
-    *   Modify the `info-card` web component to support rendering arbitrary HTML content in addition to a list.
-    *   Update the `InfoCard`'s click handler to only trigger collapse/expand when the header is clicked, allowing interaction with form elements in the content.
-    *   Add specific styles for the feedback form elements (textarea, button) inside the component's Shadow DOM.
-3.  **Implement Feedback Form**:
-    *   In the `proceed()` function, create the HTML for a feedback form.
-    *   Use the `setData()` method with a new `type` parameter (`'html'`) to inject the form into the feedback card.
-    *   Attach a `submit` event listener to the form that prevents default submission, logs the feedback to the console, and shows an alert to the user.
+1.  **Update `index.html`**: Add a `<p>` element with an ID (`recognized-object`) to serve as a placeholder for the Clarifai result.
+2.  **Update `main.js` (`proceed` function)**:
+    *   Convert the `proceed` function to an `async` function to handle the API call.
+    *   Get the base64-encoded image data from the `photo-canvas`.
+    *   Construct and send a `fetch` request to the Clarifai `general-image-recognition` model endpoint.
+    *   **Important**: Use placeholder constants for the Clarifai PAT (Personal Access Token) and other IDs, and prompt the user to provide them.
+    *   Process the API response to extract the name of the top concept (the most likely object).
+    *   Update the text content of the `recognized-object` element with the result, formatted in brackets.
+    *   Add error handling for the API call.
