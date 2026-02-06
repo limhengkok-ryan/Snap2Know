@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -14,12 +14,26 @@
     gtag('config', 'G-Q2SWXTR93S');
   </script>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+    }
+  </script>
   <link href='/style.css' rel='stylesheet'>
 </head>
-<body class="bg-gray-900 text-white flex flex-col items-center justify-center min-h-screen">
-  <div class="container mx-auto p-4 flex flex-col items-center">
-    <h1 class="text-4xl md:text-6xl font-bold mb-8">Snap2Know</h1>
-
+<body class="flex flex-col items-center min-h-screen transition-colors duration-300">
+  <header id="main-header" class="fixed top-0 left-0 right-0 bg-opacity-80 backdrop-blur-md z-10 shadow-lg transition-all duration-300">
+    <div id="header-inner-container" class="container mx-auto px-4 h-48 flex justify-center items-center transition-all duration-500">
+        <img id="logo" src="/images/snap2know_logo.png" alt="Snap2Know Logo" class="h-24 transition-all duration-500">
+        <button id="menu-button" class="focus:outline-none absolute top-6 right-4 opacity-0 pointer-events-none transition-opacity duration-500">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+            </svg>
+        </button>
+    </div>
+  </header>
+  
+  <main id="main-content" class="container mx-auto p-4 flex flex-col items-center mt-48 flex-grow transition-all duration-500">
     <!-- Camera Section -->
     <div id="camera-container" class="relative w-full max-w-lg mb-4">
         <video id="camera-stream" autoplay class="w-full h-auto rounded-lg shadow-lg" style="display:none;"></video>
@@ -29,8 +43,8 @@
     <div id="button-container" class="flex flex-wrap justify-center space-x-4">
       <button id="start-button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full transition duration-300">Start</button>
       <button id="capture-button" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full transition duration-300" style="display:none;">Capture</button>
-      <button id="cancel-button" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full transition duration-30g" style="display:none;">Cancel</button>
-      <button id="proceed-button" class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-full transition duration-300" style="display:none;">Proceed</button>
+      <button id="cancel-button" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full transition duration-300" style="display:none;">Cancel</button>
+      <button id="proceed-button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full transition duration-300" style="display:none;">Proceed</button>
       <button id="retake-button" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-full transition duration-300" style="display:none;">Retake</button>
     </div>
 
@@ -42,11 +56,44 @@
             <info-card card-id="readiness-checklist" title="Readiness Checklist"></info-card>
             <info-card card-id="quick-start-guides" title="Quick Start Guides"></info-card>
             <info-card card-id="videos" title="Videos"></info-card>
-            <info-card card-id="safety-instructions" title="Safety Instructions"></info-card>
-            <info-card card-id="service-provider" title="Service Provider"></info-card>
             <info-card card-id="common-issues" title="Common Issues"></info-card>
+            <info-card card-id="safety-instructions" title="Safety Instructions"></info-card>
+            <info-card card-id="similar-products" title="Similar Products"></info-card>
+            <info-card card-id="service-provider" title="Service Provider"></info-card>
             <info-card card-id="submit-feedback" title="Submit Feedback"></info-card>
         </div>
+    </div>
+  </main>
+
+  <!-- Slide-out Menu -->
+  <div id="menu-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden"></div>
+  <div id="menu-panel" class="fixed top-0 right-0 h-full w-80 shadow-lg z-50 transform translate-x-full transition-transform duration-300 ease-in-out">
+    <div class="p-6">
+        <button id="close-menu-button" class="absolute top-4 right-4 focus:outline-none">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+        </button>
+        <nav class="mt-10">
+            <a href="#" class="flex items-center px-4 py-3 text-lg rounded-md transition-colors duration-200">
+              <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H4a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+              My Warranty Cards
+            </a>
+            <div class="flex items-center justify-between px-4 py-3 text-lg">
+              <div class="flex items-center">
+                <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                <span>Settings</span>
+              </div>
+              <button id="theme-toggle" class="focus:outline-none">
+                  <svg id="theme-toggle-dark-icon" class="w-6 h-6 hidden" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                  <svg id="theme-toggle-light-icon" class="w-6 h-6 hidden" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.121-3.536a1 1 0 010 1.414l-.707.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM4.95 14.536l.707-.707a1 1 0 10-1.414-1.414l-.707.707a1 1 0 001.414 1.414zM2 10a1 1 0 011-1h1a1 1 0 110 2H3a1 1 0 01-1-1zm3.536-2.121a1 1 0 011.414 0l.707.707a1 1 0 11-1.414 1.414l-.707-.707a1 1 0 010-1.414zM10 18a1 1 0 01-1-1v-1a1 1 0 112 0v1a1 1 0 01-1 1z"></path></svg>
+              </button>
+            </div>
+            <a href="#" class="flex items-center px-4 py-3 text-lg rounded-md transition-colors duration-200">
+              <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+              Logout
+            </a>
+        </nav>
     </div>
   </div>
 

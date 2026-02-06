@@ -1,1 +1,86 @@
-/* Add styles here */
+:root {
+    --background-color: #f7fafc;
+    --text-color: #1a202c;
+    --header-background-color: rgba(247, 250, 252, 0.8);
+    --menu-background-color: #f7fafc;
+    --menu-text-color: #1a202c;
+    --menu-hover-background-color: #edf2f7;
+    --menu-hover-text-color: #1a202c;
+    --card-background-color: #ffffff;
+    --card-shadow-color: rgba(0, 0, 0, 0.05);
+    --card-product-background-color: #f7fafc;
+    --icon-stroke-color: #1a202c;
+}
+
+.dark {
+    --background-color: #1a202c;
+    --text-color: #ffffff;
+    --header-background-color: rgba(26, 32, 44, 0.8);
+    --menu-background-color: #2d3748;
+    --menu-text-color: #e2e8f0;
+    --menu-hover-background-color: #4a5568;
+    --menu-hover-text-color: #ffffff;
+    --card-background-color: #2d3748;
+    --card-shadow-color: rgba(0, 0, 0, 0.1);
+    --card-product-background-color: #4a5568;
+    --icon-stroke-color: #ffffff;
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+header {
+    background-color: var(--header-background-color);
+}
+
+#menu-button svg,
+#close-menu-button svg,
+#theme-toggle svg,
+.flex.items-center svg {
+    stroke: var(--icon-stroke-color);
+}
+
+#menu-panel {
+    background-color: var(--menu-background-color);
+    color: var(--menu-text-color);
+}
+
+#menu-panel a {
+    color: var(--menu-text-color);
+}
+
+#menu-panel a:hover {
+    background-color: var(--menu-hover-background-color);
+    color: var(--menu-hover-text-color);
+}
+
+/* Dynamic Header Styles */
+#main-header.shrunk #header-inner-container {
+    height: 5rem; /* 80px */
+    justify-content: space-between;
+}
+
+#main-header.shrunk #logo {
+    height: 3rem; /* 48px */
+}
+
+#main-header.shrunk #menu-button {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+#main-content.shrunk {
+    margin-top: 5rem; /* 80px */
+}
+
+info-card .card {
+    background-color: var(--card-background-color);
+    box-shadow: 0 10px 15px -3px var(--card-shadow-color), 0 4px 6px -2px var(--card-shadow-color);
+    color: var(--text-color);
+}
+
+info-card .product-card {
+    background-color: var(--card-product-background-color);
+}
