@@ -10,20 +10,36 @@
 <body class="bg-gray-900 text-white flex flex-col items-center justify-center min-h-screen">
   <div class="container mx-auto p-4 flex flex-col items-center">
     <h1 class="text-4xl md:text-6xl font-bold mb-8">Snap2Know</h1>
-    
+
+    <!-- Camera Section -->
     <div id="camera-container" class="relative w-full max-w-lg mb-4">
         <video id="camera-stream" autoplay class="w-full h-auto rounded-lg shadow-lg" style="display:none;"></video>
         <canvas id="photo-canvas" class="w-full h-auto rounded-lg shadow-lg" style="display:none;"></canvas>
     </div>
 
-    <div id="button-container" class="flex space-x-4">
+    <div id="button-container" class="flex flex-wrap justify-center space-x-4">
       <button id="start-button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full transition duration-300">Start</button>
       <button id="capture-button" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full transition duration-300" style="display:none;">Capture</button>
-      <button id="cancel-button" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full transition duration-300" style="display:none;">Cancel</button>
+      <button id="cancel-button" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full transition duration-30g" style="display:none;">Cancel</button>
       <button id="proceed-button" class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-full transition duration-300" style="display:none;">Proceed</button>
       <button id="retake-button" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-full transition duration-300" style="display:none;">Retake</button>
     </div>
+
+    <!-- Device Information Section (Initially Hidden) -->
+    <div id="device-information-section" class="mt-12 w-full max-w-4xl" style="display: none;">
+        <h2 class="text-3xl font-bold mb-8 text-center">Delux M700 Mouse</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <info-card card-id="readiness-checklist" title="Readiness Checklist"></info-card>
+            <info-card card-id="quick-start-guides" title="Quick Start Guides"></info-card>
+            <info-card card-id="videos" title="Videos"></info-card>
+            <info-card card-id="safety-instructions" title="Safety Instructions"></info-card>
+            <info-card card-id="service-provider" title="Service Provider"></info-card>
+            <info-card card-id="common-issues" title="Common Issues"></info-card>
+            <info-card card-id="submit-feedback" title="Submit Feedback"></info-card>
+        </div>
+    </div>
   </div>
+
   <script defer type="text/javascript" src="/main.js"></script>
 </body>
 </html>
