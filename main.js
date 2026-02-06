@@ -11,7 +11,7 @@ let stream;
 
 async function startCamera() {
   try {
-    stream = await navigator.mediaDevices.getUserMedia({ video: true });
+    stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
     cameraStream.srcObject = stream;
     cameraStream.style.display = 'block';
     photoCanvas.style.display = 'none';
@@ -42,7 +42,9 @@ function snapPhoto() {
 }
 
 function cancelCamera() {
-    stream.getTracks().forEach(track => track.stop());
+    if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+    }
     cameraStream.style.display = 'none';
     photoCanvas.style.display = 'none';
     captureButton.style.display = 'none';
